@@ -9,17 +9,12 @@ CREATE TABLE sizes(
 
 CREATE TABLE models(
 	model_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    model_name VARCHAR(20) NOT NULL UNIQUE
+    model_name VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE brands(
 	brand_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    brand_name VARCHAR(20) NOT NULL UNIQUE
-);
-
-CREATE TABLE categories(
-	category_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    category_name VARCHAR(20) NOT NULL UNIQUE
+    brand_name VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE cities(
@@ -34,14 +29,13 @@ CREATE TABLE provinces(
 
 CREATE TABLE products(
 	product_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    product_category INT NOT NULL,
+    product_category ENUM('Calzado', 'Indumentaria', 'Accesorios') NOT NULL,
     product_brand INT NOT NULL,
     product_model INT NOT NULL,
     product_name VARCHAR(50) NOT NULL UNIQUE,
     product_description VARCHAR(200),
     product_size INT NOT NULL,
     product_price DECIMAL(11,2) NOT NULL,
-    FOREIGN KEY (product_category) REFERENCES categories(category_id),
     FOREIGN KEY (product_brand) REFERENCES brands(brand_id),
     FOREIGN KEY (product_model) REFERENCES models(model_id),
     FOREIGN KEY (product_size) REFERENCES sizes(size_id)
