@@ -20,4 +20,17 @@ BEGIN
 END
 $$
 
-CALL sp_get_products_ordered('product_price','desc');
+CALL sp_get_products_ordered('product_price','');
+
+DELIMITER $$
+CREATE PROCEDURE `sp_increase_prices` (IN id INT,IN percent INT)
+-- PASAMOS COMO PRIMER PARÁMETRO EL ID DEL PRODUCTO A ACTUALIZAR EL PRECIO
+-- PASAMOS COMO SEGUNDO PARÁMETRO EL PORCENTAJE DE AUMENTO QUE QUEREMOS APLICAR AL MISMO
+BEGIN
+	UPDATE products
+    SET product_price=product_price*(percent/100+1)
+    WHERE product_id=id;
+END
+$$
+
+CALL sp_increase_prices(1, 100);
