@@ -17,4 +17,5 @@ BEGIN
     SELECT SUM(product_total) INTO order_total FROM golden_loot.order_detailed WHERE order_id = id;
 	RETURN order_total;
 END $$
-    
+
+SELECT f_order_total(1);

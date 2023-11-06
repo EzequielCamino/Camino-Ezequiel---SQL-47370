@@ -17,14 +17,16 @@ CREATE TABLE brands(
     brand_name VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE cities(
-	city_postal_code INT NOT NULL UNIQUE PRIMARY KEY,
-    city_name VARCHAR(50) NOT NULL
-);
-
 CREATE TABLE provinces(
 	province_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
     province_name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE cities(
+	city_postal_code INT NOT NULL UNIQUE PRIMARY KEY,
+    city_name VARCHAR(50) NOT NULL,
+    province_id INT NOT NULL,
+    FOREIGN KEY (province_id) REFERENCES provinces(province_id)
 );
 
 CREATE TABLE products(
@@ -52,7 +54,6 @@ CREATE TABLE clients(
     FOREIGN KEY (province) REFERENCES provinces(province_id),
     FOREIGN KEY (postal_code) REFERENCES cities(city_postal_code)
 );
-
 
 CREATE TABLE orders(
 	order_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
