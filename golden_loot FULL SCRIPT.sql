@@ -107,7 +107,7 @@ CREATE OR REPLACE VIEW product_detail AS
     JOIN sizes s
     ON p.product_size = s.size_id);
     
-CREATE OR REPLACE VIEW Price_below_200 AS 
+CREATE OR REPLACE VIEW price_below_200 AS 
 (SELECT product_category, product_brand, product_model, product_name, product_description, product_size, product_price
 	FROM products p 
     where product_price <= 200);
@@ -157,7 +157,7 @@ CREATE FUNCTION `f_order_total` (id INT)
 	DETERMINISTIC
 BEGIN
 	DECLARE order_total DECIMAL(11,2);
-    SELECT SUM(product_total) INTO order_total FROM golden_loot.order_detailed WHERE order_id = id;
+    SELECT SUM(f_product_total (product_price, quantity)) INTO order_total FROM golden_loot.order_detailed WHERE order_id = id;
 	RETURN order_total;
 END $$
 

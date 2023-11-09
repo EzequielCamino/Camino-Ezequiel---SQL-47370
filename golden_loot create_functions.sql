@@ -14,8 +14,10 @@ CREATE FUNCTION `f_order_total` (id INT)
 	DETERMINISTIC
 BEGIN
 	DECLARE order_total DECIMAL(11,2);
-    SELECT SUM(product_total) INTO order_total FROM golden_loot.order_detailed WHERE order_id = id;
+    SELECT SUM(f_product_total (product_price, quantity)) INTO order_total FROM golden_loot.order_detailed WHERE order_id = id;
 	RETURN order_total;
 END $$
 
 SELECT f_order_total(1);
+
+

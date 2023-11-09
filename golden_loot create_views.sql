@@ -10,7 +10,7 @@ CREATE OR REPLACE VIEW product_detail AS
     JOIN sizes s
     ON p.product_size = s.size_id);
     
-CREATE OR REPLACE VIEW Price_below_200 AS 
+CREATE OR REPLACE VIEW price_below_200 AS 
 (SELECT product_category, product_brand, product_model, product_name, product_description, product_size, product_price
 	FROM products p 
     where product_price <= 200);
