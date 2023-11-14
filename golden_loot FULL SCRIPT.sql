@@ -424,3 +424,51 @@ INSERT INTO order_detail VALUES
 (1, 1, 1),
 (1, 3, 2),
 (2, 2, 1);
+
+
+
+-- Users
+
+-- CREA USUARIO user
+CREATE USER  user@localhost IDENTIFIED BY 'user';
+-- LE CONCEDE ACCESO DE SOLO LECTURA A user
+GRANT SELECT ON golden_loot.* TO user@localhost;
+-- SHOW GRANTS FOR user@localhost;
+
+-- CREA USUARIO admin
+CREATE USER admin@localhost IDENTIFIED BY 'admin';
+-- LE CONCEDE ACCESO DE LECTURA, INSERCIÓN Y MODIFICACIÓN DE DATOS A admin
+GRANT SELECT ON golden_loot.* TO admin@localhost;
+GRANT INSERT ON golden_loot.* TO admin@localhost;
+GRANT UPDATE ON golden_loot.* TO admin@localhost;
+-- SHOW GRANTS FOR admin@localhost;
+
+
+
+-- Transactions 
+
+SET AUTOCOMMIT = 0;
+
+-- Transaccion que borra al cliente con id 3
+START TRANSACTION;
+DELETE FROM clients WHERE client_id = 3;
+-- ROLLBACK;
+COMMIT;
+
+-- Transaccion que agrega 8 registros, entre ellos dos savepoints
+
+START TRANSACTION; 
+INSERT INTO products VALUES 
+(NULL, 'Calzado', 2, 6, 'Gundam white', NULL, 13, 230),
+(NULL, 'Calzado', 2, 4, 'Why so sad', NULL, 12, 200),
+(NULL, 'Calzado', 2, 4, 'Muslin', NULL, 11, 320),
+(NULL, 'Calzado', 2, 4, 'Phillies', NULL, 8, 220);
+SAVEPOINT sp1;
+INSERT INTO products VALUES 
+(NULL, 'Calzado', 3, 18, 'Slate grey', NULL, 10, 200),
+(NULL, 'Calzado', 3, 21, 'Utility black', NULL, 14, 300),
+(NULL, 'Calzado', 3, 21, 'Wave runner', NULL, 5, 320),
+(NULL, 'Indumentaria', 6, 26, 'Roses are red', NULL, 23, 110);
+SAVEPOINT sp2;
+COMMIT;
+-- RELEASE SAVEPOINT sp1;
