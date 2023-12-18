@@ -109,7 +109,7 @@ CREATE OR REPLACE VIEW product_detail AS
     ON p.product_size = s.size_id);
     
 CREATE OR REPLACE VIEW sneakers_below_200 AS 
-(SELECT product_brand, product_model, product_name, product_description, product_size, product_price
+(SELECT product_brand, product_model, product_name, product_description, product_size, product_price, product_stock
 	FROM products p 
     where product_price <= 200
     AND product_category = "Calzado");
