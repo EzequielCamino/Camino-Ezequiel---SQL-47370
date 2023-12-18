@@ -38,6 +38,7 @@ CREATE TABLE products(
     product_description VARCHAR(200),
     product_size INT NOT NULL,
     product_price DECIMAL(11,2) NOT NULL,
+    product_stock INT NOT NULL,
     FOREIGN KEY (product_brand) REFERENCES brands(brand_id),
     FOREIGN KEY (product_model) REFERENCES models(model_id),
     FOREIGN KEY (product_size) REFERENCES sizes(size_id)

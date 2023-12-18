@@ -38,10 +38,11 @@ CREATE TABLE products(
     product_category ENUM('Calzado', 'Indumentaria', 'Accesorios') NOT NULL,
     product_brand INT NOT NULL,
     product_model INT NOT NULL,
-    product_name VARCHAR(50) NOT NULL UNIQUE,
+    product_name VARCHAR(50) NOT NULL,
     product_description VARCHAR(200),
     product_size INT NOT NULL,
     product_price DECIMAL(11,2) NOT NULL,
+    product_stock INT NOT NULL,
     FOREIGN KEY (product_brand) REFERENCES brands(brand_id),
     FOREIGN KEY (product_model) REFERENCES models(model_id),
     FOREIGN KEY (product_size) REFERENCES sizes(size_id)
@@ -107,10 +108,11 @@ CREATE OR REPLACE VIEW product_detail AS
     JOIN sizes s
     ON p.product_size = s.size_id);
     
-CREATE OR REPLACE VIEW price_below_200 AS 
-(SELECT product_category, product_brand, product_model, product_name, product_description, product_size, product_price
+CREATE OR REPLACE VIEW sneakers_below_200 AS 
+(SELECT product_brand, product_model, product_name, product_description, product_size, product_price
 	FROM products p 
-    where product_price <= 200);
+    where product_price <= 200
+    AND product_category = "Calzado");
     
 CREATE OR REPLACE VIEW product_sneakers AS 
 (SELECT product_category, product_brand, product_model, product_name, product_description, product_size, product_price
@@ -136,6 +138,11 @@ CREATE OR REPLACE VIEW order_detailed AS
 	FROM order_detail od
 	JOIN products p
     ON od.product_id = p.product_id);
+
+CREATE OR REPLACE VIEW high_stock_products AS 
+(SELECT *
+	FROM products p
+    where product_stock > 1);
 
 
 
@@ -301,7 +308,8 @@ INSERT INTO sizes VALUES
 (NULL, 'S'),
 (NULL, 'M'),
 (NULL, 'L'),
-(NULL, 'XL');
+(NULL, 'XL'),
+(NULL, 'OS');
 
 INSERT INTO provinces VALUES
 (NULL, 'Buenos Aires'),
@@ -340,7 +348,8 @@ INSERT INTO brands VALUES
 (NULL, 'BAPE'),
 (NULL, 'Vlone'),
 (NULL, 'OVO'),
-(NULL, 'Tommy Hilfiger');
+(NULL, 'Tommy Hilfiger'),
+(NULL, 'Jordan');
 
 INSERT INTO models VALUES
 (NULL, 'Dunk Low'),
@@ -369,7 +378,9 @@ INSERT INTO models VALUES
 (NULL, 'Yeezy 700 MNVN'),
 (NULL, 'Yeezy Slides'),
 (NULL, 'Tee-Shirt'),
-(NULL, 'Long Sleeves Tee-Shirt');
+(NULL, 'Long Sleeves Tee-Shirt'),
+(NULL, 'Jacket'),
+(NULL, 'Backpack');
 
 INSERT INTO cities VALUES
 (1900, 'La Plata', 1),
@@ -412,9 +423,47 @@ INSERT INTO clients VALUES
 (NULL, 'Cosme Fulanito', 'DNI', 12345678, 'Calle Falsa 123', 13, 1689);
 
 INSERT INTO products VALUES
-(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 10, 250),
-(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 12, 300),
-(NULL, 'Indumentaria', 7, 26, 'Undercover Face Black', NULL, 23, 100);
+(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 3, 200, 1),
+(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 4, 200, 1),
+(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 7, 200, 1),
+(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 10, 270, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 5, 220, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 6, 220, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 9, 300, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 10, 300, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 11, 300, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Baroque Brown', NULL, 8, 300, 2),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Baroque Brown', NULL, 11, 370, 1),
+(NULL, 'Indumentaria', 7, 26, 'Undercover Face Black', NULL, 23, 100, 1),
+(NULL, 'Indumentaria', 2, 26, 'Nike SB x Jarritos White', NULL, 22, 70, 2),
+(NULL, 'Indumentaria', 2, 26, 'Nike SB x Jarritos White', NULL, 23, 70, 2),
+(NULL, 'Indumentaria', 1, 26, 'Stussy The Wide World Tribe White', NULL, 21, 90, 2),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 10, 165, 1),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 11, 165, 1),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 12, 165, 2),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 13, 165, 1),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 14, 175, 2),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 15, 175, 2),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 17, 175, 1),
+(NULL, 'Indumentaria', 1, 28, 'Travis Scott CACT.US CORP x Nike NRG Khaki', NULL, 23, 330, 1),
+(NULL, 'Indumentaria', 1, 28, 'Travis Scott CACT.US CORP x Nike NRG Black', NULL, 22, 300, 1),
+(NULL, 'Indumentaria', 1, 28, 'Travis Scott CACT.US CORP x Nike NRG Black', NULL, 23, 350, 1),
+(NULL, 'Indumentaria', 1, 28, 'Travis Scott CACT.US CORP x Nike NRG Black', NULL, 24, 350, 1),
+(NULL, 'Calzado', 2, 4, 'Pro Hennessy', NULL, 4, 350, 1),
+(NULL, 'Calzado', 2, 4, 'Pro Hennessy', NULL, 11, 350, 1),
+(NULL, 'Calzado', 2, 6, 'RX-0 Unicorn Gundam', NULL, 11, 230, 1),
+(NULL, 'Calzado', 2, 6, 'RX-0 Unicorn Gundam', NULL, 12, 230, 1),
+(NULL, 'Calzado', 2, 6, 'RX-0 Unicorn Gundam', NULL, 13, 230, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 4, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 5, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 6, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 9, 190, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 11, 200, 1),
+(NULL, 'Calzado', 2, 4, 'HUF New York', NULL, 4, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF New York', NULL, 5, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF New York', NULL, 6, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF New York', NULL, 10, 220, 1),
+(NULL, 'Accesorios', 12, 29, 'JACQUARD AOP MINI', NULL, 25, 75, 1);
 
 INSERT INTO orders(order_id, client_id, total) VALUES
 (NULL, 1, 350),
@@ -422,26 +471,8 @@ INSERT INTO orders(order_id, client_id, total) VALUES
 
 INSERT INTO order_detail VALUES
 (1, 1, 1),
-(1, 3, 2),
+(1, 3, 1),
 (2, 2, 1);
-
-
-
--- Users
-
--- CREA USUARIO user
-CREATE USER  user@localhost IDENTIFIED BY 'user';
--- LE CONCEDE ACCESO DE SOLO LECTURA A user
-GRANT SELECT ON golden_loot.* TO user@localhost;
--- SHOW GRANTS FOR user@localhost;
-
--- CREA USUARIO admin
-CREATE USER admin@localhost IDENTIFIED BY 'admin';
--- LE CONCEDE ACCESO DE LECTURA, INSERCIÓN Y MODIFICACIÓN DE DATOS A admin
-GRANT SELECT ON golden_loot.* TO admin@localhost;
-GRANT INSERT ON golden_loot.* TO admin@localhost;
-GRANT UPDATE ON golden_loot.* TO admin@localhost;
--- SHOW GRANTS FOR admin@localhost;
 
 
 
@@ -459,16 +490,16 @@ COMMIT;
 
 START TRANSACTION; 
 INSERT INTO products VALUES 
-(NULL, 'Calzado', 2, 6, 'Gundam white', NULL, 13, 230),
-(NULL, 'Calzado', 2, 4, 'Why so sad', NULL, 12, 200),
-(NULL, 'Calzado', 2, 4, 'Muslin', NULL, 11, 320),
-(NULL, 'Calzado', 2, 4, 'Phillies', NULL, 8, 220);
+(NULL, 'Calzado', 2, 6, 'Gundam white', NULL, 13, 230, 1),
+(NULL, 'Calzado', 2, 4, 'Why so sad', NULL, 12, 200, 1),
+(NULL, 'Calzado', 2, 4, 'Muslin', NULL, 11, 320, 1),
+(NULL, 'Calzado', 2, 4, 'Phillies', NULL, 8, 220, 1);
 SAVEPOINT sp1;
 INSERT INTO products VALUES 
-(NULL, 'Calzado', 3, 18, 'Slate grey', NULL, 10, 200),
-(NULL, 'Calzado', 3, 21, 'Utility black', NULL, 14, 300),
-(NULL, 'Calzado', 3, 21, 'Wave runner', NULL, 5, 320),
-(NULL, 'Indumentaria', 6, 26, 'Roses are red', NULL, 23, 110);
+(NULL, 'Calzado', 3, 18, 'Slate grey', NULL, 10, 200, 1),
+(NULL, 'Calzado', 3, 21, 'Utility black', NULL, 14, 300, 1),
+(NULL, 'Calzado', 3, 21, 'Wave runner', NULL, 5, 320, 1),
+(NULL, 'Indumentaria', 6, 26, 'Roses are red', NULL, 23, 110, 1);
 SAVEPOINT sp2;
 COMMIT;
 -- RELEASE SAVEPOINT sp1;

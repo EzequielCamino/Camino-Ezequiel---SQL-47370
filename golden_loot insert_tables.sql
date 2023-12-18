@@ -22,7 +22,8 @@ INSERT INTO sizes VALUES
 (NULL, 'S'),
 (NULL, 'M'),
 (NULL, 'L'),
-(NULL, 'XL');
+(NULL, 'XL'),
+(NULL, 'OS');
 
 INSERT INTO provinces VALUES
 (NULL, 'Buenos Aires'),
@@ -61,7 +62,8 @@ INSERT INTO brands VALUES
 (NULL, 'BAPE'),
 (NULL, 'Vlone'),
 (NULL, 'OVO'),
-(NULL, 'Tommy Hilfiger');
+(NULL, 'Tommy Hilfiger'),
+(NULL, 'Jordan');
 
 INSERT INTO models VALUES
 (NULL, 'Dunk Low'),
@@ -90,7 +92,9 @@ INSERT INTO models VALUES
 (NULL, 'Yeezy 700 MNVN'),
 (NULL, 'Yeezy Slides'),
 (NULL, 'Tee-Shirt'),
-(NULL, 'Long Sleeves Tee-Shirt');
+(NULL, 'Long Sleeves Tee-Shirt'),
+(NULL, 'Jacket'),
+(NULL, 'Backpack');
 
 INSERT INTO cities VALUES
 (1900, 'La Plata', 1),
@@ -133,9 +137,48 @@ INSERT INTO clients VALUES
 (NULL, 'Cosme Fulanito', 'DNI', 12345678, 'Calle Falsa 123', 13, 1689);
 
 INSERT INTO products VALUES
-(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 10, 250),
-(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 12, 300),
-(NULL, 'Indumentaria', 7, 26, 'Undercover Face Black', NULL, 23, 100);
+(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 3, 200, 1),
+(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 4, 200, 1),
+(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 7, 200, 1),
+(NULL, 'Calzado', 2, 4, 'ACG Terra', NULL, 10, 270, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 5, 220, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 6, 220, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 9, 300, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 10, 300, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Saturn Gold', NULL, 11, 300, 1),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Baroque Brown', NULL, 8, 300, 2),
+(NULL, 'Calzado', 1, 14, 'Travis Scott Baroque Brown', NULL, 11, 370, 1),
+(NULL, 'Indumentaria', 7, 26, 'Undercover Face Black', NULL, 23, 100, 1),
+(NULL, 'Indumentaria', 2, 26, 'Nike SB x Jarritos White', NULL, 22, 70, 2),
+(NULL, 'Indumentaria', 2, 26, 'Nike SB x Jarritos White', NULL, 23, 70, 2),
+(NULL, 'Indumentaria', 1, 26, 'Stussy The Wide World Tribe White', NULL, 21, 90, 2),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 10, 165, 1),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 11, 165, 1),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 12, 165, 2),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 13, 165, 1),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 14, 175, 2),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 15, 175, 2),
+(NULL, 'Calzado', 2, 4, 'Pro ISO Orange Label Wolf Grey Gum', NULL, 17, 175, 1),
+(NULL, 'Indumentaria', 1, 28, 'Travis Scott CACT.US CORP x Nike NRG Khaki', NULL, 23, 330, 1),
+(NULL, 'Indumentaria', 1, 28, 'Travis Scott CACT.US CORP x Nike NRG Black', NULL, 22, 300, 1),
+(NULL, 'Indumentaria', 1, 28, 'Travis Scott CACT.US CORP x Nike NRG Black', NULL, 23, 350, 1),
+(NULL, 'Indumentaria', 1, 28, 'Travis Scott CACT.US CORP x Nike NRG Black', NULL, 24, 350, 1),
+(NULL, 'Calzado', 2, 4, 'Pro Hennessy', NULL, 4, 350, 1),
+(NULL, 'Calzado', 2, 4, 'Pro Hennessy', NULL, 11, 350, 1),
+(NULL, 'Calzado', 2, 6, 'RX-0 Unicorn Gundam', NULL, 11, 230, 1),
+(NULL, 'Calzado', 2, 6, 'RX-0 Unicorn Gundam', NULL, 12, 230, 1),
+(NULL, 'Calzado', 2, 6, 'RX-0 Unicorn Gundam', NULL, 13, 230, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 4, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 5, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 6, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 9, 190, 1),
+(NULL, 'Calzado', 2, 4, 'HUF San Francisco', NULL, 11, 200, 1),
+(NULL, 'Calzado', 2, 4, 'HUF New York', NULL, 4, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF New York', NULL, 5, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF New York', NULL, 6, 170, 1),
+(NULL, 'Calzado', 2, 4, 'HUF New York', NULL, 10, 220, 1),
+(NULL, 'Accesorios', 12, 29, 'JACQUARD AOP MINI', NULL, 25, 75, 1);
+
 
 INSERT INTO orders(order_id, client_id, total) VALUES
 (NULL, 1, 350),

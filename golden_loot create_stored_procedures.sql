@@ -36,3 +36,5 @@ END
 $$
 
 CALL sp_increase_prices(1, 100);
+
+SELECT USER();
